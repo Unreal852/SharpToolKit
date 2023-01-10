@@ -39,7 +39,8 @@ public sealed class Profiler : IDisposable
     {
         if (_isDisposed)
             throw new ObjectDisposedException(nameof(Profiler));
-        Result = new OperationResult(_profilerName, _startedAt, Stopwatch.GetElapsedTime(_startTimestamp));
+        var elapsedTime = Stopwatch.GetElapsedTime(_startTimestamp);
+        Result = new OperationResult(_profilerName, _startedAt, elapsedTime);
         _endCallback?.Invoke(Result);
     }
 
