@@ -1,45 +1,46 @@
 ﻿using System.Diagnostics;
 
+// ReSharper disable MemberCanBePrivate.Global
+
 namespace SharpTools.Timing;
 
 public sealed class Profiler : IDisposable
 {
-    public static Profiler RunNew(string? profilerName = null, string? message = null,
-                               Action<Profiler>? endCallback = null)
+    public static Profiler RunNew(string? profilerName = null, Action<OperationResult>? endCallback = null)
     {
-        var profiler = new Profiler(profilerName, message, endCallback);
+        var profiler = new Profiler(profilerName, endCallback);
         profiler.Run();
         return profiler;
     }
 
-    private readonly string?           _profilerName;
-    private readonly string?           _message;
-    private readonly Action<Profiler>? _endCallback;
-    private          long              _startTime;
-    private          bool              _isDisposed;
+    private readonly string?                  _profilerName;
+    private readonly Action<OperationResult>? _endCallback;
+    private          DateTime                 _startedAt;
+    private          long                     _startTimestamp;
+    private          bool                     _isDisposed;
 
-    public Profiler(string? profilerName = null, string? message = null, Action<Profiler>? endCallback = null)
+    public Profiler(string? profilerName = null, Action<OperationResult>? endCallback = null)
     {
         _profilerName = profilerName;
-        _message = message;
         _endCallback = endCallback;
     }
 
-    public TimeSpan Elapsed { get; private set; }
+    public OperationResult Result { get; private set; }
 
     public void Run()
     {
         if (_isDisposed)
             throw new ObjectDisposedException(nameof(Profiler));
-        _startTime = Stopwatch.GetTimestamp();
+        _startedAt = DateTime.Now;
+        _startTimestamp = Stopwatch.GetTimestamp();
     }
 
     public void End()
     {
         if (_isDisposed)
             throw new ObjectDisposedException(nameof(Profiler));
-        Elapsed = Stopwatch.GetElapsedTime(_startTime);
-        _endCallback?.Invoke(this);
+        Result = new OperationResult(_profilerName, _startedAt, Stopwatch.GetElapsedTime(_startTimestamp));
+        _endCallback?.Invoke(Result);
     }
 
     public void Dispose()

@@ -66,7 +66,7 @@ public class TimeTest
 
         // Assert
         _output.WriteLine($"Elapsed seconds {endTime.TotalSeconds}");
-        _output.WriteLine($"Profiler Elapsed seconds {profiler.Elapsed.TotalSeconds}");
-        Assert.Equal(seconds, profiler.Elapsed.TotalSeconds, 0.1);
+        _output.WriteLine($"Profiler Elapsed seconds {profiler.Result.TimeElapsed.TotalSeconds}");
+        Assert.Equal(seconds, profiler.Result.TimeElapsed.TotalSeconds, 0.1);
     }
 }
