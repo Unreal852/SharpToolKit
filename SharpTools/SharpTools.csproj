@@ -13,6 +13,7 @@
         <RepositoryUrl>https://github.com/Unreal852/SharpTools</RepositoryUrl>
         <RepositoryType>Github</RepositoryType>
         <PackageTags>c#, csharp, tools</PackageTags>
+        <PackageId>Unreal.SharpTools</PackageId>
     </PropertyGroup>
 
 </Project>
