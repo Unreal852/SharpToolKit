@@ -13,7 +13,6 @@ internal static class Program
         {
             foreach (var i in 5..1000000)
             {
-                
             }
         }
     }
@@ -21,6 +20,6 @@ internal static class Program
     private static void OnOperationCompleted(OperationResult op)
     {
         Console.WriteLine(
-                $"Operation '{op.OperationName}' started at {op.StartedAt:G} completed in {op.TimeElapsed.TotalMilliseconds}ms");
+                $"Operation '{op.OperationName}' started at {op.StartedAt:G} completed at {op.EndedAt:G} in {op.TimeElapsed.TotalMilliseconds}ms");
     }
 }
