@@ -11,7 +11,12 @@ internal static class Program
     {
         using (Profiler.RunNew("RangeIterator", OnOperationCompleted))
         {
-            foreach (var i in 5..1000000)
+            TimeUntil until = 1.5;
+            while (!until)
+            {
+            }
+
+            foreach (var i in 5..10)
             {
             }
         }
