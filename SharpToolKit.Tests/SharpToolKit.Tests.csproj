@@ -22,7 +22,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\SharpTools\SharpTools.csproj" />
+      <ProjectReference Include="..\SharpToolKit\SharpToolKit.csproj" />
     </ItemGroup>
 
 </Project>

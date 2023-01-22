@@ -1,4 +1,4 @@
-﻿namespace SharpTools.Reflection;
+﻿namespace SharpToolKit.Reflection;
 
 public static class TypeReflector
 {

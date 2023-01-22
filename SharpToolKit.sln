@@ -1,10 +1,10 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpTools", "SharpTools\SharpTools.csproj", "{03147859-D7D1-4640-B47B-1D6761DCDD4A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpToolKit", "SharpToolKit\SharpToolKit.csproj", "{03147859-D7D1-4640-B47B-1D6761DCDD4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpTools.Tests", "SharpTools.Tests\SharpTools.Tests.csproj", "{4A21B41B-4C64-4C2C-B15E-A28699B350F8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpToolKit.Tests", "SharpToolKit.Tests\SharpToolKit.Tests.csproj", "{4A21B41B-4C64-4C2C-B15E-A28699B350F8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpTools.Sample", "SharpTools.Sample\SharpTools.Sample.csproj", "{8F54047A-69EB-4FCA-9664-F77C5C8B351F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharpToolKit.Sample", "SharpToolKit.Sample\SharpToolKit.Sample.csproj", "{8F54047A-69EB-4FCA-9664-F77C5C8B351F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{F2F23372-96D8-4643-9638-562E6E0D7A2F}"
 	ProjectSection(SolutionItems) = preProject

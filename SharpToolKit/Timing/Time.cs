@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace SharpTools.Timing;
+namespace SharpToolKit.Timing;
 
 public static class Time
 {

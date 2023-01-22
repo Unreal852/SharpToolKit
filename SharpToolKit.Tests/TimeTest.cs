@@ -1,8 +1,8 @@
 ﻿using System.Diagnostics;
-using SharpTools.Timing;
+using SharpToolKit.Timing;
 using Xunit.Abstractions;
 
-namespace SharpTools.Tests;
+namespace SharpToolKit.Tests;
 
 public class TimeTest
 {

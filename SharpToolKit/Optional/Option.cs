@@ -1,4 +1,4 @@
-﻿namespace SharpTools.Optional;
+﻿namespace SharpToolKit.Optional;
 
 public static class Option
 {
@@ -23,5 +23,5 @@ public readonly struct Option<T>
     {
     }
 
-    public static implicit operator Option<T>(NoneOption none) => new Option<T>();
+    public static implicit operator Option<T>(NoneOption none) => new();
 }

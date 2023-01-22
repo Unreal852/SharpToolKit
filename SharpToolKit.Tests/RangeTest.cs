@@ -1,6 +1,6 @@
-﻿using SharpTools.Extensions;
+﻿using SharpToolKit.Extensions;
 
-namespace SharpTools.Tests;
+namespace SharpToolKit.Tests;
 
 public class RangeTest
 {

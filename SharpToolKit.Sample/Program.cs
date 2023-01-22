@@ -1,9 +1,9 @@
 ﻿// See https://aka.ms/new-console-template for more information
 
-using SharpTools.Extensions;
-using SharpTools.Timing;
+using SharpToolKit.Extensions;
+using SharpToolKit.Timing;
 
-namespace SharpTools.Sample;
+namespace SharpToolKit.Sample;
 
 internal static class Program
 {

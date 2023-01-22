@@ -1,4 +1,4 @@
-﻿namespace SharpTools.Optional;
+﻿namespace SharpToolKit.Optional;
 
 public readonly struct NoneOption
 {

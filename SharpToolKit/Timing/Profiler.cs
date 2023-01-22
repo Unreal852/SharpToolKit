@@ -2,7 +2,7 @@
 
 // ReSharper disable MemberCanBePrivate.Global
 
-namespace SharpTools.Timing;
+namespace SharpToolKit.Timing;
 
 public sealed class Profiler : IDisposable
 {

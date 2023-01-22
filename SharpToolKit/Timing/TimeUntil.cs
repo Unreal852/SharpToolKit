@@ -1,4 +1,4 @@
-﻿namespace SharpTools.Timing;
+﻿namespace SharpToolKit.Timing;
 
 public readonly struct TimeUntil : IEquatable<TimeUntil>
 {

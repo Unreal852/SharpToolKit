@@ -1,5 +1,8 @@
-﻿namespace SharpTools.Range;
+﻿namespace SharpToolKit.Range;
 
+/// <summary>
+/// Represents an enumerator to iterate over a <see cref="Range"/>
+/// </summary>
 public ref struct IntEnumerator
 {
     private readonly int _end;
@@ -7,7 +10,7 @@ public ref struct IntEnumerator
 
     public IntEnumerator(System.Range range)
     {
-        if(range.End.IsFromEnd)
+        if (range.End.IsFromEnd)
             throw new NotSupportedException();
 
         _end = range.End.Value;
@@ -16,7 +19,8 @@ public ref struct IntEnumerator
 
     public int Current => _current;
 
-    public bool MoveNext() {
+    public bool MoveNext()
+    {
         _current++;
         return _current <= _end;
     }
