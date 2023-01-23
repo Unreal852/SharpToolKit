@@ -5,15 +5,15 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Title>SharpTools</Title>
+        <Title>SharpToolKit</Title>
         <Authors>Unreal852</Authors>
         <Description>A collection of tools and re-usable code that i use on my projects.</Description>
         <Copyright>Unreal852</Copyright>
-        <PackageProjectUrl>https://github.com/Unreal852/SharpTools</PackageProjectUrl>
-        <RepositoryUrl>https://github.com/Unreal852/SharpTools</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/Unreal852/SharpToolKit</PackageProjectUrl>
+        <RepositoryUrl>https://github.com/Unreal852/SharpToolKit</RepositoryUrl>
         <RepositoryType>Github</RepositoryType>
         <PackageTags>c#, csharp, tools</PackageTags>
-        <PackageId>Unreal.SharpTools</PackageId>
+        <PackageId>Unreal.SharpToolKit</PackageId>
     </PropertyGroup>
 
 </Project>
