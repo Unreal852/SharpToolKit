@@ -1,6 +1,6 @@
 ﻿namespace SharpToolKit.Timing;
 
-public class BackgroundTimer
+public class AsyncTimer
 {
     private          Task?                   _timerTask;
     private readonly Action?                 _callback;
@@ -8,17 +8,17 @@ public class BackgroundTimer
     private readonly PeriodicTimer           _timer;
     private readonly CancellationTokenSource _cts = new();
 
-    private BackgroundTimer(TimeSpan interval)
+    private AsyncTimer(TimeSpan interval)
     {
         _timer = new PeriodicTimer(interval);
     }
 
-    public BackgroundTimer(TimeSpan interval, Action callback) : this(interval)
+    public AsyncTimer(TimeSpan interval, Action callback) : this(interval)
     {
         _callback = callback;
     }
 
-    public BackgroundTimer(TimeSpan interval, Func<Task> asyncCallback) : this(interval)
+    public AsyncTimer(TimeSpan interval, Func<Task> asyncCallback) : this(interval)
     {
         _asyncCallback = asyncCallback;
     }
