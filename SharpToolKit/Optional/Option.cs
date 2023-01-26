@@ -2,6 +2,7 @@
 
 /// <summary>
 /// Provides a set of functions for creating optional values.
+/// Based on https://github.com/nlkl/Optional
 /// </summary>
 public static class Option
 {
