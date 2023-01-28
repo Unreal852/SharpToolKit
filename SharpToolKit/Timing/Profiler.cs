@@ -4,6 +4,8 @@
 
 namespace SharpToolKit.Timing;
 
+// TODO: Find a better name for this instead of Profiler
+
 public sealed class Profiler : IDisposable
 {
     public static Profiler RunNew(string? profilerName = null, Action<OperationResult>? endCallback = null)
