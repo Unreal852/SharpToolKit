@@ -28,17 +28,9 @@ public readonly struct Option<T> : IEquatable<Option<T>>, IComparable<Option<T>>
     /// <returns>A hash code for the current optional.</returns>
     public override int GetHashCode()
     {
-        if (_hasValue)
-        {
-            if (_value == null)
-            {
-                return 1;
-            }
-
-            return _value.GetHashCode();
-        }
-
-        return 0;
+        if (!_hasValue)
+            return 0;
+        return _value == null ? 1 : _value.GetHashCode();
     }
 
     /// <summary>
