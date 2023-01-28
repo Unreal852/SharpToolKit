@@ -62,17 +62,6 @@ public static class DelegateHelper
                 convertedArguments[i] = arguments[i];
         }
 
-        for (var i = 0; i < delegateParameters.Length; i++)
-        {
-            var methodType = methodParameters[i].ParameterType;
-            var delegateType = delegateParameters[i].ParameterType;
-            var paramExp = Expression.Parameter(delegateType);
-            if (methodType != delegateType)
-                convertedArguments[i] = Expression.Convert(paramExp, methodType);
-            else
-                convertedArguments[i] = paramExp;
-        }
-
         // Create method call.
         var instanceObj = instance == null ? null : Expression.Constant(instance);
         var methodCall = Expression.Call(instanceObj, method, convertedArguments);

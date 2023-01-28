@@ -1,6 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using SharpToolKit.Extensions;
+﻿using SharpToolKit.Extensions;
 using SharpToolKit.Optional;
 using SharpToolKit.Timing;
 
@@ -10,9 +8,11 @@ internal static class Program
 {
     private static void Main(string[] args)
     {
+        ReflectionSample.CompareSpeed(OnOperationCompleted);
+
         using (Profiler.RunNew("TimeUntil and Range iteration", OnOperationCompleted))
         {
-            TimeUntil until = 1.5;
+            TimeUntil until = 0.5;
             while (!until)
             {
             }
