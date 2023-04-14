@@ -8,7 +8,7 @@ namespace SharpToolKit.Timing;
 
 public sealed class Profiler : IDisposable
 {
-    public static Profiler RunNew(string? profilerName = null, Action<OperationResult>? endCallback = null)
+    public static Profiler RunNew(string? profilerName = null, Action<ProfilerResult>? endCallback = null)
     {
         var profiler = new Profiler(profilerName, endCallback);
         profiler.Run();
@@ -16,18 +16,18 @@ public sealed class Profiler : IDisposable
     }
 
     private readonly string?                  _profilerName;
-    private readonly Action<OperationResult>? _endCallback;
+    private readonly Action<ProfilerResult>? _endCallback;
     private          DateTime                 _startedAt;
     private          long                     _startTimestamp;
     private          bool                     _isDisposed;
 
-    public Profiler(string? profilerName = null, Action<OperationResult>? endCallback = null)
+    public Profiler(string? profilerName = null, Action<ProfilerResult>? endCallback = null)
     {
         _profilerName = profilerName;
         _endCallback = endCallback;
     }
 
-    public OperationResult Result { get; private set; }
+    public ProfilerResult Result { get; private set; }
 
     public void Run()
     {
@@ -42,7 +42,7 @@ public sealed class Profiler : IDisposable
         if (_isDisposed)
             throw new ObjectDisposedException(nameof(Profiler));
         var elapsedTime = Stopwatch.GetElapsedTime(_startTimestamp);
-        Result = new OperationResult(_profilerName, _startedAt, elapsedTime);
+        Result = new ProfilerResult(_profilerName, _startedAt, elapsedTime);
         _endCallback?.Invoke(Result);
     }
 

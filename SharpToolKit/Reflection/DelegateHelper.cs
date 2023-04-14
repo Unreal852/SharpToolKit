@@ -114,8 +114,7 @@ public static class DelegateHelper
                          .Compile();
     }
 
-    public static Func<TPropertyType> CreatePropertyGetterDelegate<TPropertyType>(
-    object? instance, PropertyInfo propertyInfo)
+    public static Func<TPropertyType> CreatePropertyGetterDelegate<TPropertyType>(object? instance, PropertyInfo propertyInfo)
     {
         // TODO: Check provided generic type against the provided fieldInfo type and try to convert if they not match
         var instanceObject = instance == null ? null : Expression.Constant(instance);
@@ -123,8 +122,7 @@ public static class DelegateHelper
         return Expression.Lambda<Func<TPropertyType>>(propertyExp).Compile();
     }
 
-    public static Func<TInstance, TPropertyType> CreatePropertyGetterDelegate<TInstance, TPropertyType>(
-    PropertyInfo propertyInfo)
+    public static Func<TInstance, TPropertyType> CreatePropertyGetterDelegate<TInstance, TPropertyType>(PropertyInfo propertyInfo)
     {
         // TODO: Check provided generic type against the provided fieldInfo type and try to convert if they don't match
         var instanceParameter = Expression.Parameter(typeof(TInstance), "instance");
@@ -132,8 +130,7 @@ public static class DelegateHelper
         return Expression.Lambda<Func<TInstance, TPropertyType>>(propertyExp, instanceParameter).Compile();
     }
 
-    public static Action<TPropertyType> CreatePropertySetterDelegate<TPropertyType>(
-    object? instance, PropertyInfo propertyInfo)
+    public static Action<TPropertyType> CreatePropertySetterDelegate<TPropertyType>(object? instance, PropertyInfo propertyInfo)
     {
         // TODO: Check provided generic type against the provided fieldInfo type and try to convert if they don't match
         // TODO: Check if this property is writable.
@@ -145,8 +142,7 @@ public static class DelegateHelper
         return Expression.Lambda<Action<TPropertyType>>(assignExpression, propertyValueParam).Compile();
     }
 
-    public static Action<TInstance, TPropertyType> CreatePropertySetterDelegate<TInstance, TPropertyType>(
-    PropertyInfo propertyInfo)
+    public static Action<TInstance, TPropertyType> CreatePropertySetterDelegate<TInstance, TPropertyType>(PropertyInfo propertyInfo)
     {
         // TODO: Check provided generic type against the provided fieldInfo type and try to convert if they don't match
         // TODO: Check if this property is writable.
@@ -157,7 +153,7 @@ public static class DelegateHelper
         var propertyValueParam = Expression.Parameter(fieldType, propertyInfo.Name);
         var assignExpression = Expression.Assign(propertyExp, propertyValueParam);
         return Expression
-              .Lambda<Action<TInstance, TPropertyType>>(assignExpression, instanceParameter, propertyValueParam)
-              .Compile();
+                .Lambda<Action<TInstance, TPropertyType>>(assignExpression, instanceParameter, propertyValueParam)
+                .Compile();
     }
 }

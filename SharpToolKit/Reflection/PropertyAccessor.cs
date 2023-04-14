@@ -2,7 +2,7 @@
 
 namespace SharpToolKit.Reflection;
 
-public struct PropertyAccessor<TInstance, TPropertyType>
+public readonly struct PropertyAccessor<TInstance, TPropertyType>
 {
     public readonly Func<TInstance, TPropertyType>   Get;
     public readonly Action<TInstance, TPropertyType> Set;
@@ -14,7 +14,7 @@ public struct PropertyAccessor<TInstance, TPropertyType>
     }
 }
 
-public struct PropertyAccessor<TPropertyType>
+public readonly struct PropertyAccessor<TPropertyType>
 {
     public readonly Func<TPropertyType>   Get;
     public readonly Action<TPropertyType> Set;

@@ -2,7 +2,7 @@
 
 namespace SharpToolKit.Reflection;
 
-public struct FieldAccessor<TInstance, TFieldType>
+public readonly struct FieldAccessor<TInstance, TFieldType>
 {
     public readonly Func<TInstance, TFieldType>   Get;
     public readonly Action<TInstance, TFieldType> Set;
@@ -14,7 +14,7 @@ public struct FieldAccessor<TInstance, TFieldType>
     }
 }
 
-public struct FieldAccessor<TFieldType>
+public readonly struct FieldAccessor<TFieldType>
 {
     public readonly Func<TFieldType>   Get;
     public readonly Action<TFieldType> Set;

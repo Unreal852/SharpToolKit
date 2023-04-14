@@ -2,10 +2,10 @@
 
 public class AsyncTimer
 {
-    private          Task?                   _timerTask;
-    private readonly Action?                 _callback;
-    private readonly Func<Task>?             _asyncCallback;
-    private readonly PeriodicTimer           _timer;
+    private Task? _timerTask;
+    private readonly Action? _callback;
+    private readonly Func<Task>? _asyncCallback;
+    private readonly PeriodicTimer _timer;
     private readonly CancellationTokenSource _cts = new();
 
     private AsyncTimer(TimeSpan interval)
@@ -25,6 +25,8 @@ public class AsyncTimer
 
     public void Start()
     {
+        if (_timer != null)
+            return;
         _timerTask = WorkerAsync();
     }
 

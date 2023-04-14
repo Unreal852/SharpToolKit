@@ -8,8 +8,6 @@ internal static class Program
 {
     private static void Main(string[] args)
     {
-        ReflectionSample.CompareSpeed(OnOperationCompleted);
-
         using (Profiler.RunNew("TimeUntil and Range iteration", OnOperationCompleted))
         {
             TimeUntil until = 0.5;
@@ -25,7 +23,7 @@ internal static class Program
         var input = ReadLine("Write anything: ");
         var result = ExtractWordsFromString(input);
         result.Match(s
-                        => Console.WriteLine($"The string '{input}' contains {s.Length} word(s)."),
+                   => Console.WriteLine($"The string '{input}' contains {s.Length} word(s)."),
                 () => Console.WriteLine($"The string '{input}' doesn't contains any word."));
     }
 
@@ -35,10 +33,9 @@ internal static class Program
         return words.Length == 1 ? Option.None<string[]>() : Option.Some(words);
     }
 
-    private static void OnOperationCompleted(OperationResult op)
+    private static void OnOperationCompleted(ProfilerResult op)
     {
-        Console.WriteLine(
-                $"Operation '{op.OperationName}' started at {op.StartedAt:G} completed at {op.EndedAt:G} in {op.TimeElapsed.TotalMilliseconds}ms");
+        Console.WriteLine($"Operation '{op.OperationName}' started at {op.StartedAt:G} completed at {op.EndedAt:G} in {op.TimeElapsed.TotalMilliseconds}ms");
     }
 
     private static string ReadLine(string? message = null)
