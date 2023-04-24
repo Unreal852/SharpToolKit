@@ -14,6 +14,14 @@
         <RepositoryType>Github</RepositoryType>
         <PackageTags>c#, csharp, tools</PackageTags>
         <PackageId>Unreal.SharpToolKit</PackageId>
+        <PackageLicenseFile>LICENSE</PackageLicenseFile>
     </PropertyGroup>
+
+    <ItemGroup>
+      <None Include="..\LICENSE">
+        <Pack>True</Pack>
+        <PackagePath>\</PackagePath>
+      </None>
+    </ItemGroup>
 
 </Project>
