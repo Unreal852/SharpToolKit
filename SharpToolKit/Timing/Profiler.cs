@@ -15,11 +15,11 @@ public sealed class Profiler : IDisposable
         return profiler;
     }
 
-    private readonly string?                  _profilerName;
+    private readonly string? _profilerName;
     private readonly Action<ProfilerResult>? _endCallback;
-    private          DateTime                 _startedAt;
-    private          long                     _startTimestamp;
-    private          bool                     _isDisposed;
+    private DateTime _startedAt;
+    private long _startTimestamp;
+    private bool _isDisposed;
 
     public Profiler(string? profilerName = null, Action<ProfilerResult>? endCallback = null)
     {

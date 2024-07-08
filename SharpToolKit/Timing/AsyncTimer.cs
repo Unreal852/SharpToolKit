@@ -25,8 +25,6 @@ public class AsyncTimer
 
     public void Start()
     {
-        if (_timer != null)
-            return;
         _timerTask = WorkerAsync();
     }
 

@@ -6,7 +6,7 @@
 public ref struct IntEnumerator
 {
     private readonly int _end;
-    private          int _current;
+    private int _current;
 
     public IntEnumerator(System.Range range)
     {

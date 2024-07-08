@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net7.0</TargetFramework>
+        <TargetFramework>net8.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -15,6 +15,7 @@
         <PackageTags>c#, csharp, tools</PackageTags>
         <PackageId>Unreal.SharpToolKit</PackageId>
         <PackageLicenseFile>LICENSE</PackageLicenseFile>
+        <LangVersion>12</LangVersion>
     </PropertyGroup>
 
     <ItemGroup>
