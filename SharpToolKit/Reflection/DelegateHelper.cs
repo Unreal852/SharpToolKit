@@ -1,6 +1,8 @@
 ﻿using System.Linq.Expressions;
 using System.Reflection;
 
+// ReSharper disable MemberCanBePrivate.Global
+
 namespace SharpToolKit.Reflection;
 
 public static class DelegateHelper
@@ -68,8 +70,8 @@ public static class DelegateHelper
 
         // Convert return type when necessary.
         var convertedMethodCall = delegateInfo.ReturnType == method.ReturnType
-                ? (Expression)methodCall
-                : Expression.Convert(methodCall, delegateInfo.ReturnType);
+            ? (Expression)methodCall
+            : Expression.Convert(methodCall, delegateInfo.ReturnType);
 
         return Expression.Lambda<T>(convertedMethodCall, arguments).Compile();
     }
@@ -111,7 +113,7 @@ public static class DelegateHelper
         var fieldValueParam = Expression.Parameter(fieldType, fieldInfo.Name);
         var assignExpression = Expression.Assign(field, fieldValueParam);
         return Expression.Lambda<Action<TInstance, TFieldType>>(assignExpression, instanceParameter, fieldValueParam)
-                         .Compile();
+            .Compile();
     }
 
     public static Func<TPropertyType> CreatePropertyGetterDelegate<TPropertyType>(object? instance, PropertyInfo propertyInfo)
@@ -153,7 +155,7 @@ public static class DelegateHelper
         var propertyValueParam = Expression.Parameter(fieldType, propertyInfo.Name);
         var assignExpression = Expression.Assign(propertyExp, propertyValueParam);
         return Expression
-                .Lambda<Action<TInstance, TPropertyType>>(assignExpression, instanceParameter, propertyValueParam)
-                .Compile();
+            .Lambda<Action<TInstance, TPropertyType>>(assignExpression, instanceParameter, propertyValueParam)
+            .Compile();
     }
 }

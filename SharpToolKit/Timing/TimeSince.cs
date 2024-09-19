@@ -2,14 +2,9 @@
 
 namespace SharpToolKit.Timing;
 
-public readonly struct TimeSince : IEquatable<TimeSince>
+public readonly struct TimeSince(double time) : IEquatable<TimeSince>
 {
-    public TimeSince(double time)
-    {
-        Time = time;
-    }
-
-    public double Time { get; }
+    public double Time { get; } = time;
 
     public bool Equals(TimeSince other) => Math.Abs(Time - other.Time) < 0.001;
     public override bool Equals(object? obj) => obj is TimeSince other && Equals(other);

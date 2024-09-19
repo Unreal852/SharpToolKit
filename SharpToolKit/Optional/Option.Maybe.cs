@@ -2,7 +2,7 @@
 
 public readonly struct Option<T> : IEquatable<Option<T>>, IComparable<Option<T>>
 {
-    private readonly T    _value;
+    private readonly T _value;
     private readonly bool _hasValue;
 
     internal Option(T value, bool hasValue)
@@ -15,11 +15,12 @@ public readonly struct Option<T> : IEquatable<Option<T>>, IComparable<Option<T>>
 
     public bool Equals(Option<T> other)
     {
-        if (!_hasValue && !other._hasValue)
-            return true;
-        if (_hasValue && other._hasValue)
-            return EqualityComparer<T>.Default.Equals(_value, other._value);
-        return false;
+        return _hasValue switch
+        {
+            false when !other._hasValue => true,
+            true when other._hasValue => EqualityComparer<T>.Default.Equals(_value, other._value),
+            _ => false
+        };
     }
 
     /// <summary>
@@ -37,7 +38,7 @@ public readonly struct Option<T> : IEquatable<Option<T>>, IComparable<Option<T>>
     /// Determines whether two optionals are equal.
     /// </summary>
     /// <param name="obj">The optional to compare with the current one.</param>
-    /// <returns>A boolean indicating whether or not the optionals are equal.</returns>
+    /// <returns>A boolean indicating whether the optionals are equal.</returns>
     public override bool Equals(object? obj)
     {
         return obj is Option<T> option && Equals(option);
@@ -51,11 +52,12 @@ public readonly struct Option<T> : IEquatable<Option<T>>, IComparable<Option<T>>
     /// <returns>An integer indicating the relative order of the optionals being compared.</returns>
     public int CompareTo(Option<T> other)
     {
-        if (_hasValue && !other._hasValue)
-            return 1;
-        if (!_hasValue && other._hasValue)
-            return -1;
-        return Comparer<T>.Default.Compare(_value, other._value);
+        return _hasValue switch
+        {
+            true when !other._hasValue => 1,
+            false when other._hasValue => -1,
+            _ => Comparer<T>.Default.Compare(_value, other._value)
+        };
     }
 
     /// <summary>
@@ -93,7 +95,7 @@ public readonly struct Option<T> : IEquatable<Option<T>>, IComparable<Option<T>>
     /// Determines if the current optional contains a specified value.
     /// </summary>
     /// <param name="value">The value to locate.</param>
-    /// <returns>A boolean indicating whether or not the value was found.</returns>
+    /// <returns>A boolean indicating whether the value was found.</returns>
     public bool Contains(T value)
     {
         if (!_hasValue)
@@ -108,7 +110,7 @@ public readonly struct Option<T> : IEquatable<Option<T>>, IComparable<Option<T>>
     /// satisfying a specified predicate.
     /// </summary>
     /// <param name="predicate">The predicate.</param>
-    /// <returns>A boolean indicating whether or not the predicate was satisfied.</returns>
+    /// <returns>A boolean indicating whether the predicate was satisfied.</returns>
     public bool Exists(Func<T, bool> predicate)
     {
         if (predicate == null)
@@ -133,8 +135,7 @@ public readonly struct Option<T> : IEquatable<Option<T>>, IComparable<Option<T>>
     /// <returns>The existing or alternative value.</returns>
     public T ValueOr(Func<T> alternativeFactory)
     {
-        if (alternativeFactory == null)
-            throw new ArgumentNullException(nameof(alternativeFactory));
+        ArgumentNullException.ThrowIfNull(alternativeFactory);
         return _hasValue ? _value : alternativeFactory();
     }
 
@@ -155,8 +156,7 @@ public readonly struct Option<T> : IEquatable<Option<T>>, IComparable<Option<T>>
     /// <returns>A new optional, containing either the existing or alternative value.</returns>
     public Option<T> Or(Func<T> alternativeFactory)
     {
-        if (alternativeFactory == null)
-            throw new ArgumentNullException(nameof(alternativeFactory));
+        ArgumentNullException.ThrowIfNull(alternativeFactory);
         return _hasValue ? this : Option.Some(alternativeFactory());
     }
 
@@ -177,38 +177,9 @@ public readonly struct Option<T> : IEquatable<Option<T>>, IComparable<Option<T>>
     /// <returns>The alternative optional, if no value is present, otherwise itself.</returns>
     public Option<T> Else(Func<Option<T>> alternativeOptionFactory)
     {
-        if (alternativeOptionFactory == null)
-            throw new ArgumentNullException(nameof(alternativeOptionFactory));
+        ArgumentNullException.ThrowIfNull(alternativeOptionFactory);
         return _hasValue ? this : alternativeOptionFactory();
     }
-
-    // /// <summary>
-    // /// Attaches an exceptional value to an empty optional.
-    // /// </summary>
-    // /// <param name="exception">The exceptional value to attach.</param>
-    // /// <returns>An optional with an exceptional value.</returns>
-    // public Option<T, TException> WithException<TException>(TException exception)
-    // {
-    //     return Match(
-    //             some: value => Option.Some<T, TException>(value),
-    //             none: () => Option.None<T, TException>(exception)
-    //     );
-    // }
-
-    // /// <summary>
-    // /// Attaches an exceptional value to an empty optional.
-    // /// </summary>
-    // /// <param name="exceptionFactory">A factory function to create an exceptional value to attach.</param>
-    // /// <returns>An optional with an exceptional value.</returns>
-    // public Option<T, TException> WithException<TException>(Func<TException> exceptionFactory)
-    // {
-    //     if (exceptionFactory == null) throw new ArgumentNullException(nameof(exceptionFactory));
-    //
-    //     return Match(
-    //             some: value => Option.Some<T, TException>(value),
-    //             none: () => Option.None<T, TException>(exceptionFactory())
-    //     );
-    // }
 
     /// <summary>
     /// Evaluates a specified function, based on whether a value is present or not.
@@ -218,10 +189,8 @@ public readonly struct Option<T> : IEquatable<Option<T>>, IComparable<Option<T>>
     /// <returns>The result of the evaluated function.</returns>
     public TResult Match<TResult>(Func<T, TResult> some, Func<TResult> none)
     {
-        if (some == null)
-            throw new ArgumentNullException(nameof(some));
-        if (none == null)
-            throw new ArgumentNullException(nameof(none));
+        ArgumentNullException.ThrowIfNull(some);
+        ArgumentNullException.ThrowIfNull(none);
         return _hasValue ? some(_value) : none();
     }
 
@@ -232,10 +201,8 @@ public readonly struct Option<T> : IEquatable<Option<T>>, IComparable<Option<T>>
     /// <param name="none">The action to evaluate if the value is missing.</param>
     public void Match(Action<T> some, Action none)
     {
-        if (some == null)
-            throw new ArgumentNullException(nameof(some));
-        if (none == null)
-            throw new ArgumentNullException(nameof(none));
+        ArgumentNullException.ThrowIfNull(some);
+        ArgumentNullException.ThrowIfNull(none);
 
         if (_hasValue)
             some(_value);
@@ -249,8 +216,7 @@ public readonly struct Option<T> : IEquatable<Option<T>>, IComparable<Option<T>>
     /// <param name="some">The action to evaluate if the value is present.</param>
     public void MatchSome(Action<T> some)
     {
-        if (some == null)
-            throw new ArgumentNullException(nameof(some));
+        ArgumentNullException.ThrowIfNull(some);
 
         if (_hasValue)
             some(_value);
@@ -262,8 +228,7 @@ public readonly struct Option<T> : IEquatable<Option<T>>, IComparable<Option<T>>
     /// <param name="none">The action to evaluate if the value is missing.</param>
     public void MatchNone(Action none)
     {
-        if (none == null)
-            throw new ArgumentNullException(nameof(none));
+        ArgumentNullException.ThrowIfNull(none);
 
         if (!_hasValue)
         {
@@ -279,12 +244,11 @@ public readonly struct Option<T> : IEquatable<Option<T>>, IComparable<Option<T>>
     /// <returns>The transformed optional.</returns>
     public Option<TResult> Map<TResult>(Func<T, TResult> mapping)
     {
-        if (mapping == null)
-            throw new ArgumentNullException(nameof(mapping));
+        ArgumentNullException.ThrowIfNull(mapping);
 
         return Match(
-                some: value => Option.Some(mapping(value)),
-                none: Option.None<TResult>
+            some: value => Option.Some(mapping(value)),
+            none: Option.None<TResult>
         );
     }
 
@@ -297,28 +261,13 @@ public readonly struct Option<T> : IEquatable<Option<T>>, IComparable<Option<T>>
     /// <returns>The transformed optional.</returns>
     public Option<TResult> FlatMap<TResult>(Func<T, Option<TResult>> mapping)
     {
-        if (mapping == null)
-            throw new ArgumentNullException(nameof(mapping));
+        ArgumentNullException.ThrowIfNull(mapping);
 
         return Match(
-                some: mapping,
-                none: Option.None<TResult>
+            some: mapping,
+            none: Option.None<TResult>
         );
     }
-
-    // /// <summary>
-    // /// Transforms the inner value in an optional
-    // /// into another optional. The result is flattened, 
-    // /// and if either is empty, an empty optional is returned.
-    // /// If the option contains an exception, it is removed.
-    // /// </summary>
-    // /// <param name="mapping">The transformation function.</param>
-    // /// <returns>The transformed optional.</returns>
-    // public Option<TResult> FlatMap<TResult, TException>(Func<T, Option<TResult, TException>> mapping)
-    // {
-    //     if (mapping == null) throw new ArgumentNullException(nameof(mapping));
-    //     return FlatMap(value => mapping(value).WithoutException());
-    // }
 
     /// <summary>
     /// Empties an optional if a specified condition
@@ -339,8 +288,7 @@ public readonly struct Option<T> : IEquatable<Option<T>>, IComparable<Option<T>>
     /// <returns>The filtered optional.</returns>
     public Option<T> Filter(Func<T, bool> predicate)
     {
-        if (predicate == null)
-            throw new ArgumentNullException(nameof(predicate));
+        ArgumentNullException.ThrowIfNull(predicate);
         return _hasValue && !predicate(_value) ? Option.None<T>() : this;
     }
 
@@ -358,7 +306,7 @@ public readonly struct Option<T> : IEquatable<Option<T>>, IComparable<Option<T>>
     /// </summary>
     /// <param name="left">The first optional to compare.</param>
     /// <param name="right">The second optional to compare.</param>
-    /// <returns>A boolean indicating whether or not the optionals are equal.</returns>
+    /// <returns>A boolean indicating whether the optionals are equal.</returns>
     public static bool operator ==(Option<T> left, Option<T> right)
     {
         return left.Equals(right);
@@ -369,7 +317,7 @@ public readonly struct Option<T> : IEquatable<Option<T>>, IComparable<Option<T>>
     /// </summary>
     /// <param name="left">The first optional to compare.</param>
     /// <param name="right">The second optional to compare.</param>
-    /// <returns>A boolean indicating whether or not the optionals are unequal.</returns>
+    /// <returns>A boolean indicating whether the optionals are unequal.</returns>
     public static bool operator !=(Option<T> left, Option<T> right)
     {
         return !left.Equals(right);
@@ -380,7 +328,7 @@ public readonly struct Option<T> : IEquatable<Option<T>>, IComparable<Option<T>>
     /// </summary>
     /// <param name="left">The first optional to compare.</param>
     /// <param name="right">The second optional to compare.</param>
-    /// <returns>A boolean indicating whether or not the left optional is less than the right optional.</returns>
+    /// <returns>A boolean indicating whether the left optional is less than the right optional.</returns>
     public static bool operator <(Option<T> left, Option<T> right)
     {
         return left.CompareTo(right) < 0;
@@ -391,7 +339,7 @@ public readonly struct Option<T> : IEquatable<Option<T>>, IComparable<Option<T>>
     /// </summary>
     /// <param name="left">The first optional to compare.</param>
     /// <param name="right">The second optional to compare.</param>
-    /// <returns>A boolean indicating whether or not the left optional is less than or equal the right optional.</returns>
+    /// <returns>A boolean indicating whether the left optional is less than or equal the right optional.</returns>
     public static bool operator <=(Option<T> left, Option<T> right)
     {
         return left.CompareTo(right) <= 0;
@@ -402,7 +350,7 @@ public readonly struct Option<T> : IEquatable<Option<T>>, IComparable<Option<T>>
     /// </summary>
     /// <param name="left">The first optional to compare.</param>
     /// <param name="right">The second optional to compare.</param>
-    /// <returns>A boolean indicating whether or not the left optional is greater than the right optional.</returns>
+    /// <returns>A boolean indicating whether the left optional is greater than the right optional.</returns>
     public static bool operator >(Option<T> left, Option<T> right)
     {
         return left.CompareTo(right) > 0;
@@ -413,7 +361,7 @@ public readonly struct Option<T> : IEquatable<Option<T>>, IComparable<Option<T>>
     /// </summary>
     /// <param name="left">The first optional to compare.</param>
     /// <param name="right">The second optional to compare.</param>
-    /// <returns>A boolean indicating whether or not the left optional is greater than or equal the right optional.</returns>
+    /// <returns>A boolean indicating whether the left optional is greater than or equal the right optional.</returns>
     public static bool operator >=(Option<T> left, Option<T> right)
     {
         return left.CompareTo(right) >= 0;
